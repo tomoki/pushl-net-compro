@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <meta name="author" content="Tomoki Imai">
+  <title>競技プログラミング入門</title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <!--[if lt IE 9]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+  <style type="text/css">
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; background-color: #f8f8f8; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+pre, code { background-color: #f8f8f8; }
+code > span.kw { color: #204a87; font-weight: bold; }
+code > span.dt { color: #204a87; }
+code > span.dv { color: #0000cf; }
+code > span.bn { color: #0000cf; }
+code > span.fl { color: #0000cf; }
+code > span.ch { color: #4e9a06; }
+code > span.st { color: #4e9a06; }
+code > span.co { color: #8f5902; font-style: italic; }
+code > span.ot { color: #8f5902; }
+code > span.al { color: #ef2929; }
+code > span.fu { color: #000000; }
+code > span.er { font-weight: bold; }
+  </style>
+  <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
+  <style type="text/css">
+  
+  body {
+      font-family: Helvetica, arial, sans-serif;
+      font-size: 14px;
+      line-height: 1.6;
+      padding-top: 10px;
+      padding-bottom: 10px;
+      background-color: white;
+      padding: 30px; }
+  
+  body > *:first-child {
+      margin-top: 0 !important; }
+  body > *:last-child {
+      margin-bottom: 0 !important; }
+  
+  a {
+      color: #4183C4; }
+  a.absent {
+      color: #cc0000; }
+  a.anchor {
+      display: block;
+      padding-left: 30px;
+      margin-left: -30px;
+      cursor: pointer;
+      position: absolute;
+      top: 0;
+      left: 0;
+      bottom: 0; }
+  
+  h1, h2, h3, h4, h5, h6 {
+      margin: 20px 0 10px;
+      padding: 0;
+      font-weight: bold;
+      -webkit-font-smoothing: antialiased;
+      cursor: text;
+      position: relative; }
+  
+  h1:hover a.anchor, h2:hover a.anchor, h3:hover a.anchor, h4:hover a.anchor, h5:hover a.anchor, h6:hover a.anchor {
+      background: url("../../images/modules/styleguide/para.png") no-repeat 10px center;
+      text-decoration: none; }
+  
+  h1 tt, h1 code {
+      font-size: inherit; }
+  
+  h2 tt, h2 code {
+      font-size: inherit; }
+  
+  h3 tt, h3 code {
+      font-size: inherit; }
+  
+  h4 tt, h4 code {
+      font-size: inherit; }
+  
+  h5 tt, h5 code {
+      font-size: inherit; }
+  
+  h6 tt, h6 code {
+      font-size: inherit; }
+  
+  h1 {
+      font-size: 28px;
+      color: black; }
+  
+  h2 {
+      font-size: 24px;
+      border-bottom: 1px solid #cccccc;
+      color: black; }
+  
+  h3 {
+      font-size: 18px; }
+  
+  h4 {
+      font-size: 16px; }
+  
+  h5 {
+      font-size: 14px; }
+  
+  h6 {
+      color: #777777;
+      font-size: 14px; }
+  
+  p, blockquote, ul, ol, dl, li, table, pre {
+      margin: 15px 0; }
+  
+  hr {
+      background: transparent url("../../images/modules/pulls/dirty-shade.png") repeat-x 0 0;
+      border: 0 none;
+      color: #cccccc;
+      height: 4px;
+      padding: 0; }
+  
+  body > h2:first-child {
+      margin-top: 0;
+      padding-top: 0; }
+  body > h1:first-child {
+      margin-top: 0;
+      padding-top: 0; }
+  body > h1:first-child + h2 {
+      margin-top: 0;
+      padding-top: 0; }
+  body > h3:first-child, body > h4:first-child, body > h5:first-child, body > h6:first-child {
+      margin-top: 0;
+      padding-top: 0; }
+  
+  a:first-child h1, a:first-child h2, a:first-child h3, a:first-child h4, a:first-child h5, a:first-child h6 {
+      margin-top: 0;
+      padding-top: 0; }
+  
+  h1 p, h2 p, h3 p, h4 p, h5 p, h6 p {
+      margin-top: 0; }
+  
+  
+  li p.first {
+      display: inline-block;
+      padding: 0;
+  }
+  
+  ul, ol {
+      padding-left: 30px;
+  }
+  
+  ul :first-child, ol :first-child {
+      margin-top: 0; }
+  
+  ul :last-child, ol :last-child {
+      margin-bottom: 0; }
+  
+  dl {
+      padding: 0; }
+  dl dt {
+      font-size: 14px;
+      font-weight: bold;
+      font-style: italic;
+      padding: 0;
+      margin: 15px 0 5px; }
+  dl dt:first-child {
+      padding: 0; }
+  dl dt > :first-child {
+      margin-top: 0; }
+  dl dt > :last-child {
+      margin-bottom: 0; }
+  dl dd {
+      margin: 0 0 15px;
+      padding: 0 15px; }
+  dl dd > :first-child {
+      margin-top: 0; }
+  dl dd > :last-child {
+      margin-bottom: 0; }
+  
+  blockquote {
+      border-left: 4px solid #dddddd;
+      padding: 0 15px;
+      color: #777777; }
+  blockquote > :first-child {
+      margin-top: 0; }
+  blockquote > :last-child {
+      margin-bottom: 0; }
+  
+  table {
+      padding: 0; }
+  table tr {
+      border-top: 1px solid #cccccc;
+      background-color: white;
+      margin: 0;
+      padding: 0; }
+  table tr:nth-child(2n) {
+      background-color: #f8f8f8; }
+  table tr th {
+      font-weight: bold;
+      border: 1px solid #cccccc;
+      text-align: left;
+      margin: 0;
+      padding: 6px 13px; }
+  table tr td {
+      border: 1px solid #cccccc;
+      text-align: left;
+      margin: 0;
+      padding: 6px 13px; }
+  table tr th :first-child, table tr td :first-child {
+      margin-top: 0; }
+  table tr th :last-child, table tr td :last-child {
+      margin-bottom: 0; }
+  
+  img {
+      max-width: 100%; }
+  
+  span.frame {
+      display: block;
+      overflow: hidden; }
+  span.frame > span {
+      border: 1px solid #dddddd;
+      display: block;
+      float: left;
+      overflow: hidden;
+      margin: 13px 0 0;
+      padding: 7px;
+      width: auto; }
+  span.frame span img {
+      display: block;
+      float: left; }
+  span.frame span span {
+      clear: both;
+      color: #333333;
+      display: block;
+      padding: 5px 0 0; }
+  span.align-center {
+      display: block;
+      overflow: hidden;
+      clear: both; }
+  span.align-center > span {
+      display: block;
+      overflow: hidden;
+      margin: 13px auto 0;
+      text-align: center; }
+  span.align-center span img {
+      margin: 0 auto;
+      text-align: center; }
+  span.align-right {
+      display: block;
+      overflow: hidden;
+      clear: both; }
+  span.align-right > span {
+      display: block;
+      overflow: hidden;
+      margin: 13px 0 0;
+      text-align: right; }
+  span.align-right span img {
+      margin: 0;
+      text-align: right; }
+  span.float-left {
+      display: block;
+      margin-right: 13px;
+      overflow: hidden;
+      float: left; }
+  span.float-left span {
+      margin: 13px 0 0; }
+  span.float-right {
+      display: block;
+      margin-left: 13px;
+      overflow: hidden;
+      float: right; }
+  span.float-right > span {
+      display: block;
+      overflow: hidden;
+      margin: 13px auto 0;
+      text-align: right; }
+  
+  code, tt {
+      margin: 0 2px;
+      padding: 0 5px;
+      white-space: nowrap;
+      border: 1px solid #eaeaea;
+      background-color: #f8f8f8;
+      border-radius: 3px; }
+  
+  pre code {
+      margin: 0;
+      padding: 0;
+      white-space: pre;
+      border: none;
+      background: transparent; }
+  
+  .highlight pre {
+      background-color: #f8f8f8;
+      border: 1px solid #cccccc;
+      font-size: 13px;
+      line-height: 19px;
+      overflow: auto;
+      padding: 6px 10px;
+      border-radius: 3px; }
+  
+  pre {
+      background-color: #f8f8f8;
+      border: 1px solid #cccccc;
+      font-size: 13px;
+      line-height: 19px;
+      overflow: auto;
+      padding: 6px 10px;
+      border-radius: 3px; }
+  pre code, pre tt {
+      background-color: transparent;
+      border: none; }
+  
+  </style>
+</head>
+<body>
+<header>
+<h1 class="title">競技プログラミング入門</h1>
+<h2 class="author">Tomoki Imai</h2>
+</header>
+<h1 id="イントロダクション">イントロダクション</h1>
+<p>この文書は、競技プログラミングに興味があって、始めてみたいけど、どこから始めていいかわからない、そんな君のために書きました。<br />競技プログラミングするメリットだなんだっていうのは、他のページにたくさん書いてあるから、もう書かないよ。</p>
+<h2 id="事前に必要とする知識">事前に必要とする知識</h2>
+<p>まぁこの文章は競技プログラミングの入門であって、プログラミングの入門ではないんだ。<br />だから、以下の知識を要求するよ。<br />まぁ、とりあえずやってみて、わからないなと思ったらググってほしい。</p>
+<ul>
+<li>最低限のC++の知識(関数定義,if,for,whileくらい？)<br /></li>
+<li>最低限の英語力と、分からなかったときにググれること<br /></li>
+<li>コマンドラインからのコンパイル、実行ができること<br /></li>
+<li>標準入出力(stdin/stdout)を扱えること</li>
+</ul>
+<p>言語については、C++を選択した。これは、C++が競技プログラミングでよく使われていて、ほぼ全ての大会で使用可能であるから。<br />この文書を読み終わった後、次のステージに滑らかに上がれるようにね。</p>
+<p>もしも、君が不安になったりしたときのために、リンクを貼っておくね。</p>
+<ul>
+<li><a href="http://www.geocities.jp/ky_webid/cpp/language/index.html">Programing Place(C++編)</a><br /></li>
+<li><a href="http://www7b.biglobe.ne.jp/~robe/cpphtml/">ロベールのC++教室</a><br /></li>
+<li><a href="http://www.alc.co.jp/">英語のアルク</a><br /></li>
+<li><a href="./win.html">競技プログラミングのためのWindows入門</a></li>
+</ul>
+<h1 id="どこから始めるの">どこから始めるの？</h1>
+<h2 id="問題サイトの選択">問題サイトの選択</h2>
+<p>競技プログラミングを始める上で一番の障害となるのがここだと思う。<br />個人的には、<a href="http://codeforces.com/">Codeforces</a>から始めるのをお勧めする。<br /><a href="http://codeforces.com/">Codeforces</a>は、問題もたくさんあるし、大会も割と頻繁にあるからね。あと、重要なこととして、どんな場合にプログラムが不正解になるのかわかるからね。Codeforcesに疲れてきたり、ちょっと違う問題を解きたいときのためにいくつかリンクを貼っておくよ。</p>
+<ul>
+<li><a href="http://judge.u-aizu.ac.jp/onlinejudge/index.jsp">Aizu Online Judge(AOJ)</a> 日本語の問題が多くある。お勧め<br /></li>
+<li><a href="http://atcoder.jp/">AtCoder</a> 日本語の大会が月1で開かれている。<br /></li>
+<li><a href="http://poj.org/status">Peking University Judge Online(POJ)</a> ちょっと難しめの問題がたくさんある。<br /></li>
+<li><a href="http://community.topcoder.com/tc">TopCoder</a> 世界的に有名な大会。過去問も充実</li>
+</ul>
+<p>この文書では、Codeforcesから始めることにしよう。<br />アカウントも簡単に作れるから、<a href="http://codeforces.com/register">ここ</a>からつくっておいてね。</p>
+<h1 id="はじめての問題">はじめての問題</h1>
+<p>Codeforcesの解いてる人が多い順に問題をソートしたのが<a href="http://codeforces.com/problemset?order=BY_SOLVED_DESC">ここ</a>。</p>
+<h2 id="codeforces-4a-water-melon">Codeforces 4A Water melon</h2>
+<p>まず、<a href="http://codeforces.com/problemset/problem/4/A">この問題</a>を例にして、競技プログラミングを始めよう。</p>
+<h3 id="問題を読む">問題を読む</h3>
+<p>まず、競技プログラミングをするのに一番といってもいいほど重要なこと。<br />問題をきちんと、理解すること。ここではそのコツを紹介しておくよ。</p>
+<ul>
+<li>何を入力するのか、何を出力するのか<br /></li>
+<li>入力が数字である場合、どれくらいの大きさなのか</li>
+</ul>
+<p>それを踏まえて、さっきの問題を見てみよう。ほんとなら、自分で読まなきゃいけないけれど、ここではサービスで必要なところを翻訳してみるよ。</p>
+<pre><code>ある暑い日、Peteと彼の友達、Billyはスイカを買うことにしました。
+彼らは、even numberのファンで、スイカを二つに分けたとき、
+彼らのスイカがeven number kgだったらいいなと思いました。
+
+入力
+最初ただ一つの行は、w(1 ≤ w ≤ 100)を含んでいます。それは彼らの買ったスイカの重さです。
+
+出力
+もしも、PeteとBillyがスイカを二つのeven number kgの部分に分けられるとき&quot;YES&quot;を、そうでないときには&quot;NO&quot;を出力しなさい。
+
+サンプル
+入力:
+8
+出力
+YES
+
+彼らは、4,4もしくは、2,6にスイカを分けられます。</code></pre>
+<p>多くの競技プログラミングのサイトでも、ほぼ同じようなフォーマットで問題が与えられる。<br />つまり、ストーリー、入力と出力、サンプルが与えられることが多い。</p>
+<p>問題はわかったかな？じゃあ、問題を解いてみよう。</p>
+<h3 id="問題を解く">問題を解く</h3>
+<p>重要なこととして、いきなりプログラムを書くのではなくて、紙とペンを使って考えるというのがある。<br />まぁとても簡単な問題ならいいかもだけど、やっぱり不安だしさ。<br />じゃあ、一緒に考えよう。</p>
+<p>まず、PeteとBillyのスイカが偶数になる。つまり、<span class="math">\(n,m\)</span>を自然数として、Peteは<span class="math">\(2n\)</span>,Billyは<span class="math">\(2m\)</span>のスイカを持ってることにしよう。<br />すると、スイカの合計は、<span class="math">\(2(n+m)\)</span>になる。ただし、<span class="math">\(n,m \geq 1\)</span>だよ。つまり、<span class="math">\(n+m \geq 2\)</span>となるわけだ。<br />ということは、スイカの合計というのは、4以上の偶数であればよさそうということがわかった。</p>
+<h3 id="プログラミングする">プログラミングする</h3>
+<p>さて、上で問題が大体何をすればよいか考えたね。つまり、スイカの合計が4以上の偶数かどうかをチェックすればよかった。<br />プログラムがどういう形式で入力/出力をするかだけど、TopCoderといった例外を除けば、基本的には標準入出力から取ることになる。</p>
+<h4 id="入力する">入力する</h4>
+<p>入力に関しては、基本的にcin,coutを使うことを推奨してる。詳しくは<a href="http://pushl.net/library.html#入出力">こちら</a>。<br /><a href="http://www.geocities.jp/ky_webid/cpp/library/029.html">ここ</a>も参考にしてね。<br />あと、基本的に入力に使う変数は問題文に合わせよう。</p>
+<pre class="sourceCode cpp"><code class="sourceCode cpp"><span class="ot">#include &lt;iostream&gt;</span>
+
+<span class="kw">using</span> <span class="kw">namespace</span> std;
+
+<span class="dt">int</span> main(){
+    <span class="co">// watermelon (問題文と変数名を同じにした。)</span>
+    <span class="dt">int</span> w;
+    cin &gt;&gt; w;
+
+    <span class="kw">return</span> <span class="dv">0</span>;
+}</code></pre>
+<h4 id="計算する">計算する</h4>
+<p>実際にさっき考えたアルゴリズムに従って計算してみよう。</p>
+<pre class="sourceCode cpp"><code class="sourceCode cpp"><span class="ot">#include &lt;iostream&gt;</span>
+
+<span class="kw">using</span> <span class="kw">namespace</span> std;
+
+<span class="dt">int</span> main(){
+    <span class="co">// watermelon (問題文と変数名を同じにした。)</span>
+    <span class="dt">int</span> w;
+    cin &gt;&gt; w;
+
+
+    <span class="dt">bool</span> yes;
+    <span class="kw">if</span>(w &gt;= <span class="dv">4</span> &amp;&amp; w % <span class="dv">2</span> == <span class="dv">0</span>){
+        yes = <span class="kw">true</span>;
+    }<span class="kw">else</span>{
+        yes = <span class="kw">false</span>;
+    }
+
+    <span class="kw">return</span> <span class="dv">0</span>;
+}</code></pre>
+<h4 id="出力する">出力する</h4>
+<p>答を出力しよう。今回は、&quot;YES&quot;か&quot;NO&quot;かを出力する問題なんだけど、問題によっては、実数を出力しなさいといった問題だったりする。<br />そういうときには、何桁まで出すかを考慮しなきゃいけない場合があるんだ。それをどうやってやるか。<a href="http://pushl.net/library.html#cout">ここ</a>を参照したりしてね。</p>
+<pre class="sourceCode cpp"><code class="sourceCode cpp"><span class="ot">#include &lt;iostream&gt;</span>
+
+<span class="kw">using</span> <span class="kw">namespace</span> std;
+
+<span class="dt">int</span> main(){
+    <span class="co">// watermelon (問題文と変数名を同じにした。)</span>
+    <span class="dt">int</span> w;
+    cin &gt;&gt; w;
+
+    <span class="dt">bool</span> yes;
+    <span class="kw">if</span>(w &gt;= <span class="dv">4</span> &amp;&amp; w % <span class="dv">2</span> == <span class="dv">0</span>){
+        yes = <span class="kw">true</span>;
+    }<span class="kw">else</span>{
+        yes = <span class="kw">false</span>;
+    }
+
+    <span class="co">// 大文字、小文字に注意</span>
+    <span class="kw">if</span>(yes){
+        cout &lt;&lt; <span class="st">&quot;YES&quot;</span> &lt;&lt; endl;
+    }<span class="kw">else</span>{
+        cout &lt;&lt; <span class="st">&quot;NO&quot;</span> &lt;&lt; endl;
+    }
+    <span class="kw">return</span> <span class="dv">0</span>;
+}</code></pre>
+<h4 id="テストする">テストする</h4>
+<p>さて、プログラムはかけた。これでプログラムが完成したわけだけど、本当にちゃんと動くだろうか。サンプルとちょっとした自分のテストを試してみよう。</p>
+<pre><code>// main.cppがおいてあるディレクトリに移動する
+$ cd codeforces/4A
+$ ls
+ main.cpp
+// コンパイルする
+$ g++ main.cpp
+$ ./a.out
+8
+YES
+$ ./a.out
+5
+NO</code></pre>
+<p>ちゃんと動いてそうだね。これでいってみよう。</p>
+<h4 id="提出する">提出する</h4>
+<p>ドキドキの提出タイム。codeforcesの場合、さっきの問題ページの右側で、ファイルを選択して、submitしよう。<br />結果が出たかな？結果は以下のように場合分けされる。</p>
+<ul>
+<li>Accepted(AC) 正解!おめでとう!<br /></li>
+<li>Wrong Answer(WA) まちがった答を出したみたい。<br /></li>
+<li>Time Limit Exceeded(TLE) 時間切れ。もっと高速化してね。<br /></li>
+<li>Runtime Error (RE) なんかおかしなことがおこった。<br /></li>
+<li>Memory Limit Exceeded(MLE) メモリつかいすぎ<br /></li>
+<li>Presentation Error(PE) 表示のしかたがおかしいよ。(改行してないとか。)</li>
+</ul>
+<p>基本的によく見るのは、上の3つだと思う。これ以外にも一応あるけど、あんまり見ないかな。ACするまでがんばって再提出してみよう。ちょっとだけ解決のヒントを書いていくね。</p>
+<h5 id="wrong-answer">Wrong Answer</h5>
+<p>Wrong Answerになったとき、何を疑えばいいんだろう。</p>
+<ul>
+<li>プログラムにバグがある。<br /></li>
+<li>そもそもアルゴリズムが間違っている。<br /></li>
+<li>コーナーケースが存在している。<br /></li>
+<li>オーバーフローしている。</li>
+</ul>
+<p>多くの場合は最初の三つだよ。プログラムにバグがあれば、考えが正しくても、もちろん不正解になっちゃうよ。でコーナーケースっていうのは、多くの場合当て嵌まる法則が当て嵌まらないようなケースのことを言って、例えば今回の場合だと、偶数なら大丈夫そうに見えるけど、2という偶数なのにダメっていうコーナーケースが存在してる。アルゴリズムを考えるときには注意。あと、大きな数字を扱ったりするときにはオーバーフローがおこることがある。それを解決するには、long longとかの大きな型を使ってみるといいんだ。</p>
+<h6 id="プログラムのバグ">プログラムのバグ</h6>
+<p>プログラムのバグといえば、たくさんあるけれど、原因をいくつかあげておくね。</p>
+<ul>
+<li>ロジックのミス(ifの条件が逆とか)<br /></li>
+<li>初期化ミス(上界、下界の見積りミス含め)<br /></li>
+<li>入出力ミス<br /></li>
+<li>変数名ミス(i,j、逆になったりね。)<br /></li>
+<li>浮動小数点の誤差死(浮動小数点を扱うときにはいくつか注意が必要。)(参考:http://d.hatena.ne.jp/komiyam/20111210/1323503019)</li>
+</ul>
+<h5 id="time-limit-exceeded">Time Limit Exceeded</h5>
+<p>Time Limit Exceededになる原因は大きくわけて、3つくらいある。</p>
+<ul>
+<li>アルゴリズムの計算量が大きすぎる<br /></li>
+<li>無限ループに嵌っている<br /></li>
+<li>定数項が大きすぎる</li>
+</ul>
+<p>時間が掛っているわけだから、一番ありそうなのがアルゴリズムが遅すぎるということ。計算量っていうのは、アルゴリズムがどれくらいの速さで問題を解けるだろうかという指標。詳しくはググってみてね。<br />あと、無限ループにはまっていること。これはそのまんまだね。</p>
+<h5 id="計算量">計算量</h5>
+<p>すこしだけ計算量について書いておこうと思う。</p>
+<p>競技プログラミングでは、たいていの場合実行時間に制限がある。（コンテストや問題にもよるけど、だいたい1秒から5秒くらい。）<br />せっかくコードを書いても、処理が重くて制限時間内にプログラムが終了しないとTLEになってしまう。<br />だから、コードを書く前には自分の考えた方法が制限時間に間に合うかを見積もるようにしたほうがいい。</p>
+<p>実行時間の見積り方はいろいろあるけど、競技プログラミングでよくある方法は</p>
+<ul>
+<li>整数演算や単純な変数の読み書きしかしないなら、1千万～1億回のループで1秒（1億ループはかなり新しめのマシンの場合）<br /></li>
+<li>浮動小数点数の計算は整数演算の10倍程度遅い</li>
+</ul>
+<p>とするもの。<br />もちろん、サーバで動いているマシンの性能や、ループ内で行なっている処理の内容にも左右されるけど、競技プログラミングで書くようなコードであればだいたいこの法則に当てはまる。</p>
+<p>オーダーっていう概念もあって、それも重要だけれど、単純な見積りはこれでやってみよう。</p>
+<h5 id="runtime-error">Runtime Error</h5>
+<p>なにか変なことってどんなことだろう。例えばこんなこと。</p>
+<ul>
+<li>配列の大きさを越えたアクセス<br /></li>
+<li>再帰が深すぎる<br /></li>
+<li>return 0;していない。(AOJ等では起こりえる)<br /></li>
+<li>標準エラー出力に出力している。(同上)</li>
+</ul>
+<p>配列の大きさを越えたアクセスは知ってると思うけれど、再帰が深すぎるっていうのは知らないかもしれないね。<br />基本的に再帰には、深さの限界がある。何も考えてないと、嵌ることもあるかもしれない。これに関しては、Stack Over Flowっていう名前がついてるから、ググってみてね。<br />最後の二つは、AOJ特有の問題かもしれない。Codeforcesではこれは起きなかったんだけど、逆にCodeforcesからAOJにうつるときに嵌るかもしれないし、書いておくね。</p>
+<h4 id="解けなかったときには">解けなかったときには</h4>
+<p>どうしても解けない。そんなときにどうするか。</p>
+<ul>
+<li>周りの人と相談する<br /></li>
+<li>人のソースを見る。<br /></li>
+<li>問題名とか、問題番号でググる</li>
+</ul>
+<p>Codeforcesでは原則、ソースコードは公開される。問題のリストの右側,&quot;standings&quot;をクリックしてみよう。その問題を解いた人のソースコードがそこから見えるよ。</p>
+<h1 id="次のステップ">次のステップ</h1>
+<p>ひとまずすごく簡単な問題を解いてみた。次は何をしたらいいんだろう。</p>
+<h2 id="問題をひたすら解く">問題をひたすら解く</h2>
+<p>問題をひたすら解く、それもいいだろうね。でもそれじゃいつか飽きちゃうんじゃないかな。</p>
+<h2 id="大会に出よう">大会に出よう!</h2>
+<p>競技プログラミングが多くの人を惹くつける理由はここにあるんだ。対戦だ。いかにはやく問題を正確に解くか、それを世界中の人と競争する。<br />Codeforcesのトップページに&quot;Before contest...&quot;とかなってることに気づいたかな？<br />Codeforcesは大体週一で大会を開いてるんだ。それに参加してみると、きっと楽しいよ。<br />もちろん、他の大会にでるのもいいし。</p>
+<h1 id="参照先">参照先</h1>
+<p>大会にでろーなんていってもさ、必要なパーツがわかんなきゃだめだって、そう文句も言いたくなる。<br />しょうがないね。C++のライブラリもちょっとは知っておかなきゃいけないんだ。</p>
+<ul>
+<li>vector,set,queue...とかの使い方<br /></li>
+<li>よくでるアルゴリズムの書き方</li>
+</ul>
+<p>そういうのを学ぶには、もちろん問題をやって、知らなかったらググって、っていうのもいいけれど、オンラインではいくつか競技ライブラリと呼ばれるものを公開してる人がいる。<br />特に、僕が公開しているものはある程度C++のライブラリの使い方を紹介してもいる。</p>
+<h2 id="競技ライブラリ">競技ライブラリ</h2>
+<ul>
+<li><a href="http://pushl.net/library.html">TomokiImaiライブラリ</a><br /></li>
+<li><a href="http://www.prefield.com/algorithm/index.html">Spaghetthi Source</a></li>
+</ul>
+<h2 id="c関連">C++関連</h2>
+<ul>
+<li><a href="http://www.geocities.jp/ky_webid/cpp/library/index.html">C++編(標準ライブラリ) トップページ</a><br /></li>
+<li><a href="http://www7b.biglobe.ne.jp/~robe/cpphtml/">ロベールのC++教室</a></li>
+</ul>
+<h2 id="関連書籍">関連書籍</h2>
+<ul>
+<li><a href="http://www.amazon.co.jp/%E6%9C%80%E5%BC%B7%E6%9C%80%E9%80%9F%E3%82%A2%E3%83%AB%E3%82%B4%E3%83%AA%E3%82%BA%E3%83%9E%E3%83%BC%E9%A4%8A%E6%88%90%E8%AC%9B%E5%BA%A7-%E3%83%97%E3%83%AD%E3%82%B0%E3%83%A9%E3%83%9F%E3%83%B3%E3%82%B0%E3%82%B3%E3%83%B3%E3%83%86%E3%82%B9%E3%83%88TopCoder%E6%94%BB%E7%95%A5%E3%82%AC%E3%82%A4%E3%83%89-%E9%AB%98%E6%A9%8B-%E7%9B%B4%E5%A4%A7/dp/4797367172/ref=pd_bxgy_b_text_y">最強最速アルゴリズマー養成講座</a> : やさしめの競技プログラミング入門本<br /></li>
+<li><a href="http://www.amazon.co.jp/%E3%83%97%E3%83%AD%E3%82%B0%E3%83%A9%E3%83%9F%E3%83%B3%E3%82%B0%E3%82%B3%E3%83%B3%E3%83%86%E3%82%B9%E3%83%88%E3%83%81%E3%83%A3%E3%83%AC%E3%83%B3%E3%82%B8%E3%83%96%E3%83%83%E3%82%AF-%E7%AC%AC2%E7%89%88-%EF%BD%9E%E5%95%8F%E9%A1%8C%E8%A7%A3%E6%B1%BA%E3%81%AE%E3%82%A2%E3%83%AB%E3%82%B4%E3%83%AA%E3%82%BA%E3%83%A0%E6%B4%BB%E7%94%A8%E5%8A%9B%E3%81%A8%E3%82%B3%E3%83%BC%E3%83%87%E3%82%A3%E3%83%B3%E3%82%B0%E3%83%86%E3%82%AF%E3%83%8B%E3%83%83%E3%82%AF%E3%82%92%E9%8D%9B%E3%81%88%E3%82%8B%EF%BD%9E-%E7%A7%8B%E8%91%89%E6%8B%93%E5%93%89/dp/4839941068/ref=pd_sim_b_5">プログラミングコンテストチャレンジブック</a> : すこしだけ↑よりも難しめだけれど、とても内容が充実している。おすすめ。<br /></li>
+<li><a href="http://www.amazon.co.jp/%E3%82%A2%E3%83%AB%E3%82%B4%E3%83%AA%E3%82%BA%E3%83%A0%E3%82%AF%E3%82%A4%E3%83%83%E3%82%AF%E3%83%AA%E3%83%95%E3%82%A1%E3%83%AC%E3%83%B3%E3%82%B9-George-T-Heineman/dp/4873114284/ref=sr_1_1?s=books&amp;ie=UTF8&amp;qid=1368662164&amp;sr=1-1&amp;keywords=%E3%82%A2%E3%83%AB%E3%82%B4%E3%83%AA%E3%82%BA%E3%83%A0%E3%82%AF%E3%82%A4%E3%83%83%E3%82%AF%E3%83%AA%E3%83%95%E3%82%A1%E3%83%AC%E3%83%B3%E3%82%B9">アルゴリズムクイックリファレンス</a> : 競技プログラミングの本ではないけれど、色々なアルゴリズムが割と網羅的にのっている。</li>
+</ul>
+<h2 id="twitter">Twitter</h2>
+<p>もし君がTwitterをしてるんだったら、丁度いい。競技プログラマは割とTwitterが好きな傾向にあるみたいだからね。<br />わからなかったら、つぶやいて、もしかしたら誰か助けてくれるかも。ぼくもできれば君の力になりたいな。<br />おすすめリンクをかいとくね。</p>
+<ul>
+<li><a href="https://twitter.com/kinaba/topcoder-jp">kinabaさんのTopcoder-jpリスト</a>ここの人をたくさんフォローするといい感じ<br /></li>
+<li><a href="http://d.hatena.ne.jp/chokudai/20110617/1308242031">今すぐフォローすべき競技プログラミング界のスーパーエンジニア</a> つよい人たちの紹介<br /></li>
+<li><a href="https://twitter.com/Tomoki_Imai">Tomoki Imai on Twitter</a> ぼく。たまにアカウントはありません。</li>
+</ul>
+<p>もし今やってなくても、今からでも遅くないよ。やっぱり、一緒にやってる人がいるっていいからさ。</p>
+<h2 id="ブログ">ブログ</h2>
+<p>もし君が筆忠実なら、ブログを書くことをおすすめしてみるよ。</p>
+<h2 id="カレンダー">カレンダー</h2>
+<p>TopCoderとか、Codeforces、他のもろもろの大会っていつあるんだろう？そんなとき、<a href="http://topcoder.g.hatena.ne.jp/calendar">Topcoder部のカレンダー</a>が役にたつ。<br />これは有志の人達が、大会のスケジュールを纏めてくれているものだよ。<br />iCal形式も用意されてるから、Googleカレンダーにもインポートできて便利。</p>
+</body>
+</html>
