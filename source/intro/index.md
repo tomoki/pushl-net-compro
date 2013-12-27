@@ -299,6 +299,7 @@ Codeforcesは大体週一で大会を開いてるんだ。それに参加して�
 ## C++関連
 - [C++編(標準ライブラリ) トップページ](http://www.geocities.jp/ky_webid/cpp/library/index.html)
 - [ロベールのC++教室](http://www7b.biglobe.ne.jp/~robe/cpphtml/)
+- [Programing Place(C++編)](http://www.geocities.jp/ky_webid/cpp/language/index.html)
 
 ## 関連書籍
 
