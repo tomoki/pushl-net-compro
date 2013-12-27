@@ -4,6 +4,7 @@
 # Introduction
 ここでは、競技プログラミングをする為のC++について書く。
 通常のプログラミングでは使用するべきではない書き方も多用する。
+C++を使うメリットとしては、高速であること、使用している人が多いことが挙げられる。
 
 ## 前提知識
 この文書を読むにあたっての前提知識を列挙する。
@@ -60,5 +61,72 @@ alias gpp="g++ -std=c++11 -Wall -O2"
 $ gpp main.cpp -o main
 ~~~~~~
 
+## コマンドの実行
+(必要か?)
+
+# C++の基本
+
+## main関数
+main関数は、C,C++でほとんど変わらない。
+ただし、return 0を忘れるとruntime errorとなる場合がある。(例えばAOJ)
+いわゆるHelloWorldは以下のように書ける。
+
+~~~~~~{.cpp}
+#include <iostream>
+
+using namespace std;
+
+int main(int argc,char **argv){
+    cout << "Hello World" << endl;
+    return 0;
+}
+~~~~~~
+
+## includeについて
+多くの入門サイトにおいて、おまじないと称されるincludeについてすこしだけ。
+競技プログラミングにおいて、ファイルを分割することはほとんどない。
+なぜなら、ファイルの提出は1ファイルのみであることが多いからである。
+
+しかしながら、iostreamのincludeが実際には何をしているのか知っておくのは有益である。
+g++にオプション,-Eを設定することでプリプロセス済のファイルを出すことができる。
+それによりincludeが何をしているのかわかるかもしれない。
+
+includeとは、ファイルのコピペである。
+includeは指定されたファイルをそこにペーストするだけにすぎない。
+そのファイルの中に、coutだったりの定義がはいっているのである。
+
+## using namespace
+名前空間は、C言語には明示的には存在しない概念である。
+C++において、名前空間は以下のように定義できる。
+
+~~~~~~{.cpp}
+#include <iostream>
+
+using namespace std;
+
+namespace hoge{
+    int poyo(int x){
+        return x;
+    }
+};
+
+int main(int argc,char **argv){
+    // compile error
+    // poyo was not declared in this scope
+    // poyo(1);
+
+    // ok
+    hoge::poyo(1);
+    return 0;
+}
+~~~~~~
+
+つまるところ、Cのスコープのようなものである。
+ただし、中の関数、変数にアクセスできる。それには上記のように(hoge::)が必要になる。
+当然、標準ライブラリが持っている名前空間というものも存在していて、それがstdである。
+using namespace ...は指定した名前空間をすべて取り込む。
+よって、本来std::coutと書くところをcoutと省略することができる。
+競技プログラミングをする上で、using namespace stdは必須であると言える。
+通常のプログラミングでは名前の衝突が起こる可能性が高く、オススメできない。
 
 

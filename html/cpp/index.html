@@ -11,6 +11,26 @@
     <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
   <![endif]-->
   <style type="text/css">
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; background-color: #f8f8f8; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+pre, code { background-color: #f8f8f8; }
+code > span.kw { color: #204a87; font-weight: bold; }
+code > span.dt { color: #204a87; }
+code > span.dv { color: #0000cf; }
+code > span.bn { color: #0000cf; }
+code > span.fl { color: #0000cf; }
+code > span.ch { color: #4e9a06; }
+code > span.st { color: #4e9a06; }
+code > span.co { color: #8f5902; font-style: italic; }
+code > span.ot { color: #8f5902; }
+code > span.al { color: #ef2929; }
+code > span.fu { color: #000000; }
+code > span.er { font-weight: bold; }
+  </style>
+  <style type="text/css">
   
   body {
       font-family: Helvetica, arial, sans-serif;
@@ -302,11 +322,11 @@
 <h2 class="author">Tomoki Imai</h2>
 </header>
 <h1 id="introduction">Introduction</h1>
-<p>ここでは、競技プログラミングをする為のC++について書く。<br />通常のプログラミングでは使用するべきではない書き方も多用する。</p>
+<p>ここでは、競技プログラミングをする為のC++について書く。<br />通常のプログラミングでは使用するべきではない書き方も多用する。<br />C++を使うメリットとしては、高速であること、使用している人が多いことが挙げられる。</p>
 <h2 id="前提知識">前提知識</h2>
 <p>この文書を読むにあたっての前提知識を列挙する。</p>
 <ul>
-<li>基本的なC/C++の知識。すくなくともCで関数定義等はできることを改訂する<br /></li>
+<li>基本的なC/C++の知識。すくなくともCで関数定義等はできることを仮定する<br /></li>
 <li>g++/clang++がインストールされていること</li>
 </ul>
 <h2 id="リファレンス">リファレンス</h2>
@@ -336,5 +356,44 @@
 <pre><code>alias gpp=&quot;g++ -std=c++11 -Wall -O2&quot;</code></pre>
 <p>これによって、以下のような記述ができるようになる。</p>
 <pre><code>$ gpp main.cpp -o main</code></pre>
+<h2 id="コマンドの実行">コマンドの実行</h2>
+<p>(必要か?)</p>
+<h1 id="cの基本">C++の基本</h1>
+<h2 id="main関数">main関数</h2>
+<p>main関数は、C,C++でほとんど変わらない。<br />ただし、return 0を忘れるとruntime errorとなる場合がある。(例えばAOJ)<br />いわゆるHelloWorldは以下のように書ける。</p>
+<pre class="sourceCode cpp"><code class="sourceCode cpp"><span class="ot">#include &lt;iostream&gt;</span>
+
+<span class="kw">using</span> <span class="kw">namespace</span> std;
+
+<span class="dt">int</span> main(<span class="dt">int</span> argc,<span class="dt">char</span> **argv){
+    cout &lt;&lt; <span class="st">&quot;Hello World&quot;</span> &lt;&lt; endl;
+    <span class="kw">return</span> <span class="dv">0</span>;
+}</code></pre>
+<h2 id="includeについて">includeについて</h2>
+<p>多くの入門サイトにおいて、おまじないと称されるincludeについてすこしだけ。<br />競技プログラミングにおいて、ファイルを分割することはほとんどない。<br />なぜなら、ファイルの提出は1ファイルのみであることが多いからである。</p>
+<p>しかしながら、iostreamのincludeが実際には何をしているのか知っておくのは有益である。<br />g++にオプション,-Eを設定することでプリプロセス済のファイルを出すことができる。<br />それによりincludeが何をしているのかわかるかもしれない。</p>
+<p>includeとは、ファイルのコピペである。<br />includeは指定されたファイルをそこにペーストするだけにすぎない。<br />そのファイルの中に、coutだったりの定義がはいっているのである。</p>
+<h2 id="using-namespace">using namespace</h2>
+<p>名前空間は、C言語には明示的には存在しない概念である。<br />C++において、名前空間は以下のように定義できる。</p>
+<pre class="sourceCode cpp"><code class="sourceCode cpp"><span class="ot">#include &lt;iostream&gt;</span>
+
+<span class="kw">using</span> <span class="kw">namespace</span> std;
+
+<span class="kw">namespace</span> hoge{
+    <span class="dt">int</span> poyo(<span class="dt">int</span> x){
+        <span class="kw">return</span> x;
+    }
+};
+
+<span class="dt">int</span> main(<span class="dt">int</span> argc,<span class="dt">char</span> **argv){
+    <span class="co">// compile error</span>
+    <span class="co">// poyo was not declared in this scope</span>
+    <span class="co">// poyo(1);</span>
+
+    <span class="co">// ok</span>
+    hoge::poyo(<span class="dv">1</span>);
+    <span class="kw">return</span> <span class="dv">0</span>;
+}</code></pre>
+<p>つまるところ、Cのスコープのようなものである。<br />ただし、中の関数、変数にアクセスできる。それには上記のように(hoge::)が必要になる。<br />当然、標準ライブラリが持っている名前空間というものも存在していて、それがstdである。<br />using namespace ...は指定した名前空間をすべて取り込む。<br />よって、本来std::coutと書くところをcoutと省略することができる。</p>
 </body>
 </html>
