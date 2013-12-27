@@ -394,6 +394,103 @@ code > span.er { font-weight: bold; }
     hoge::poyo(<span class="dv">1</span>);
     <span class="kw">return</span> <span class="dv">0</span>;
 }</code></pre>
-<p>つまるところ、Cのスコープのようなものである。<br />ただし、中の関数、変数にアクセスできる。それには上記のように(hoge::)が必要になる。<br />当然、標準ライブラリが持っている名前空間というものも存在していて、それがstdである。<br />using namespace ...は指定した名前空間をすべて取り込む。<br />よって、本来std::coutと書くところをcoutと省略することができる。</p>
+<p>つまるところ、Cのスコープのようなものである。<br />ただし、中の関数、変数にアクセスできる。それには上記のように(hoge::)が必要になる。<br />当然、標準ライブラリが持っている名前空間というものも存在していて、それがstdである。<br />using namespace ...は指定した名前空間をすべて取り込む。<br />よって、本来std::coutと書くところをcoutと省略することができる。<br />競技プログラミングをする上で、using namespace stdは必須であると言える。<br />通常のプログラミングでは名前の衝突が起こる可能性が高く、オススメできない。</p>
+<p>また、coutについては後々書くことにする。</p>
+<h2 id="制御文">制御文</h2>
+<p>制御文はアルゴリズムの根本と言っても良い。<br />基本的にはCと同じであるが、例を紹介しながらさらっと見ていく。</p>
+<h3 id="if文">if文</h3>
+<p>Cのifと大体同じである。</p>
+<pre class="sourceCode cpp"><code class="sourceCode cpp"><span class="ot">#include &lt;iostream&gt;</span>
+
+<span class="kw">using</span> <span class="kw">namespace</span> std;
+
+<span class="kw">struct</span> Hoge{
+    <span class="kw">explicit</span> <span class="kw">operator</span> <span class="dt">bool</span>() <span class="dt">const</span>{
+        cerr &lt;&lt; <span class="st">&quot;bool cast&quot;</span> &lt;&lt; endl;
+        <span class="kw">return</span> <span class="kw">true</span>;
+    }
+};
+
+<span class="dt">int</span> main(<span class="dt">int</span> argc,<span class="dt">char</span> **argv){
+    Hoge h;
+    <span class="kw">if</span>(h){
+        cerr &lt;&lt; <span class="st">&quot;h is true&quot;</span> &lt;&lt; endl;
+    }<span class="kw">else</span>{
+        cerr &lt;&lt; <span class="st">&quot;h is false&quot;</span> &lt;&lt; endl;
+    } <span class="co">// -&gt; h is true</span>
+
+    <span class="kw">if</span>(<span class="dv">0</span>){
+        cerr &lt;&lt; <span class="st">&quot;0 is true&quot;</span> &lt;&lt; endl; 
+    }<span class="kw">else</span>{
+        cerr &lt;&lt; <span class="st">&quot;0 is false&quot;</span> &lt;&lt; endl;
+    } <span class="co">// -&gt; 0 is false</span>
+    <span class="kw">return</span> <span class="dv">0</span>;
+}</code></pre>
+<p>boolへのキャストが発生する。整数型(int,long long)は0のみがfalse,それ以外はtrueと解釈される。<br />クラスの場合は、boolへのキャストが発生する。</p>
+<h3 id="通常のfor文">通常のfor文</h3>
+<p>Cのforと大体同じである。が、C90と違って宣言をfor文内で行える。</p>
+<pre class="sourceCode cpp"><code class="sourceCode cpp"><span class="ot">#include &lt;iostream&gt;</span>
+
+<span class="kw">using</span> <span class="kw">namespace</span> std;
+
+<span class="dt">int</span> main(<span class="dt">int</span> argc,<span class="dt">char</span> **argv){
+    <span class="kw">for</span>(<span class="dt">int</span> i=<span class="dv">0</span>;i&lt;<span class="dv">10</span>;i++){
+        cout &lt;&lt; i &lt;&lt; endl;
+    }
+    <span class="kw">return</span> <span class="dv">0</span>;
+}</code></pre>
+<p>また競技の世界では以下のようなマクロを宣言することが多い。</p>
+<pre class="sourceCode cpp"><code class="sourceCode cpp"><span class="ot">#include &lt;iostream&gt;</span>
+
+<span class="ot">#define rep(i,n) for(int i=0;i&lt;(int)(n);i++)</span>
+
+<span class="kw">using</span> <span class="kw">namespace</span> std;
+
+<span class="dt">int</span> main(<span class="dt">int</span> argc,<span class="dt">char</span> **argv){
+    rep(i,<span class="dv">10</span>){
+        cout &lt;&lt; i &lt;&lt; endl;
+    }
+    <span class="kw">return</span> <span class="dv">0</span>;
+}</code></pre>
+<p>これによって、インクリメントや条件文のミスを減らし、またタイプ量も減らすことができる。</p>
+<h3 id="range-based-for文">range-based for文</h3>
+<p>これについてはvector等と一緒に述べることにする。</p>
+<h3 id="while文">while文</h3>
+<p>Cと大体同じである。</p>
+<pre class="sourceCode cpp"><code class="sourceCode cpp"><span class="ot">#include &lt;iostream&gt;</span>
+
+<span class="kw">using</span> <span class="kw">namespace</span> std;
+
+<span class="dt">int</span> main(<span class="dt">int</span> argc,<span class="dt">char</span> **argv){
+    <span class="co">// 無限ループ</span>
+    <span class="kw">while</span>(<span class="kw">true</span>){
+    }
+    <span class="kw">return</span> <span class="dv">0</span>;
+}</code></pre>
+<p>個人的には、複数テストケースのときに以下のように使うことが多い。</p>
+<pre class="sourceCode cpp"><code class="sourceCode cpp"><span class="ot">#include &lt;iostream&gt;</span>
+
+<span class="kw">using</span> <span class="kw">namespace</span> std;
+
+<span class="co">// ここで解く</span>
+<span class="dt">int</span> solve(<span class="dt">int</span> n){
+    <span class="kw">return</span> n;
+}
+
+<span class="dt">int</span> main(<span class="dt">int</span> argc,<span class="dt">char</span> **argv){
+    <span class="co">// n=0のケースが来るまでループ</span>
+    <span class="kw">while</span>(<span class="kw">true</span>){
+        <span class="dt">int</span> n;
+        cin &gt;&gt; n;
+        <span class="kw">if</span>(n == <span class="dv">0</span>) <span class="kw">break</span>;
+        cout &lt;&lt; solve(n) &lt;&lt; endl;
+    }
+    <span class="kw">return</span> <span class="dv">0</span>;
+}</code></pre>
+<h3 id="do-while">do-while</h3>
+<p>Cのdo-whileとほとんど同じである。<br />競技の世界でも、通常の世界でもあまり目にすることはないが、競技の世界ではnext_permutationというライブラリ関数を使う際に使用することが多い。<br />ここでは省略するが、next_permutationについては以下を参照されたし。</p>
+<ul>
+<li><a href="https://sites.google.com/site/cpprefjp/reference/algorithm/next_permutation">cpprefjp - C++ Library Reference next_permutation</a></li>
+</ul>
 </body>
 </html>

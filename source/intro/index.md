@@ -23,6 +23,7 @@
 - [Programing Place(C++編)](http://www.geocities.jp/ky_webid/cpp/language/index.html)
 - [ロベールのC++教室](http://www7b.biglobe.ne.jp/~robe/cpphtml/)
 - [英語のアルク](http://www.alc.co.jp/)
+- [競技プログラミングの為のC++入門](../cpp)
 
 # どこから始めるの？
 

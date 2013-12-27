@@ -129,4 +129,128 @@ using namespace ...は指定した名前空間をすべて取り込む。
 競技プログラミングをする上で、using namespace stdは必須であると言える。
 通常のプログラミングでは名前の衝突が起こる可能性が高く、オススメできない。
 
+また、coutについては後々書くことにする。
 
+## 制御文
+制御文はアルゴリズムの根本と言っても良い。
+基本的にはCと同じであるが、例を紹介しながらさらっと見ていく。
+
+### if文
+Cのifと大体同じである。
+
+~~~~~~{.cpp}
+#include <iostream>
+
+using namespace std;
+
+struct Hoge{
+    explicit operator bool() const{
+        cerr << "bool cast" << endl;
+        return true;
+    }
+};
+
+int main(int argc,char **argv){
+    Hoge h;
+    if(h){
+        cerr << "h is true" << endl;
+    }else{
+        cerr << "h is false" << endl;
+    } // -> h is true
+
+    if(0){
+        cerr << "0 is true" << endl; 
+    }else{
+        cerr << "0 is false" << endl;
+    } // -> 0 is false
+    return 0;
+}
+~~~~~~
+
+boolへのキャストが発生する。整数型(int,long long)は0のみがfalse,それ以外はtrueと解釈される。
+クラスの場合は、boolへのキャストが発生する。
+
+### 通常のfor文
+Cのforと大体同じである。が、C90と違って宣言をfor文内で行える。
+
+~~~~~~{.cpp}
+#include <iostream>
+
+using namespace std;
+
+int main(int argc,char **argv){
+    for(int i=0;i<10;i++){
+        cout << i << endl;
+    }
+    return 0;
+}
+~~~~~~
+
+また競技の世界では以下のようなマクロを宣言することが多い。
+
+~~~~~~{.cpp}
+#include <iostream>
+
+#define rep(i,n) for(int i=0;i<(int)(n);i++)
+
+using namespace std;
+
+int main(int argc,char **argv){
+    rep(i,10){
+        cout << i << endl;
+    }
+    return 0;
+}
+~~~~~~
+
+これによって、インクリメントや条件文のミスを減らし、またタイプ量も減らすことができる。
+
+### range-based for文
+これについてはvector等と一緒に述べることにする。
+
+### while文
+Cと大体同じである。
+
+~~~~~~{.cpp}
+#include <iostream>
+
+using namespace std;
+
+int main(int argc,char **argv){
+    // 無限ループ
+    while(true){
+    }
+    return 0;
+}
+~~~~~~
+
+個人的には、複数テストケースのときに以下のように使うことが多い。
+
+~~~~~~{.cpp}
+#include <iostream>
+
+using namespace std;
+
+// ここで解く
+int solve(int n){
+    return n;
+}
+
+int main(int argc,char **argv){
+    // n=0のケースが来るまでループ
+    while(true){
+        int n;
+        cin >> n;
+        if(n == 0) break;
+        cout << solve(n) << endl;
+    }
+    return 0;
+}
+~~~~~~
+
+### do-while
+Cのdo-whileとほとんど同じである。
+競技の世界でも、通常の世界でもあまり目にすることはないが、競技の世界ではnext_permutationというライブラリ関数を使う際に使用することが多い。
+ここでは省略するが、next_permutationについては以下を参照されたし。
+
+- [cpprefjp - C++ Library Reference next_permutation](https://sites.google.com/site/cpprefjp/reference/algorithm/next_permutation)
