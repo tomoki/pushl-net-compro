@@ -254,3 +254,272 @@ Cのdo-whileとほとんど同じである。
 ここでは省略するが、next_permutationについては以下を参照されたし。
 
 - [cpprefjp - C++ Library Reference next_permutation](https://sites.google.com/site/cpprefjp/reference/algorithm/next_permutation)
+
+## 変数
+C++には型やクラス等が存在している。ここではC++特有のもののみ紹介する。
+クラスはまた後で。
+
+### const
+いわゆる定数である。Cにはこれが存在せず、またconstは違う意味であった。
+
+~~~~~~{.cpp}
+#include <iostream>
+
+using namespace std;
+
+int main(int argc,char **argv){
+    const int n = 3;
+
+    // コンパイルエラー
+    n = 2;
+    return 0;
+}
+~~~~~~
+
+### 参照
+参照とは、変数の実体を共有する変数を宣言する方法である。
+別の名前を付けると言っても良い。
+ある意味ポインタとおなじようなものである。(同じポインタを持つ違う変数)
+
+~~~~~~{.cpp}
+#include <iostream>
+
+using namespace std;
+
+int main(int argc,char **argv){
+    int n = 3;
+    int& p = n;
+
+    // pを書き換える <-> nを書き換える
+    p = 1000;
+    cout << n << endl; // -> 1000
+    return 0;
+}
+~~~~~~
+
+後述するが、参照は競技プログラミングにおいて必須となる場面がある。
+
+#### const参照
+参照を定義するときにconstを付けることで書き換え不可能になる。
+
+~~~~~~{.cpp}
+#include <iostream>
+
+using namespace std;
+
+int main(int argc,char **argv){
+    int n = 3;
+    const int& p = n;
+
+    // コンパイルエラー
+    p = 1000;
+    return 0;
+}
+~~~~~~
+
+### ポインタ
+ポインタはC同様に存在する。またC++にはスマートポインタがある。
+
+### auto
+C++11にはautoという特殊な宣言が存在する。
+これは型推論をして適当な型をそこに当て嵌めてくれるというものである。
+
+~~~~~~{.cpp}
+#include <iostream>
+
+using namespace std;
+
+int main(int argc,char **argv){
+    int n = 3;
+    // 右辺はintだから左辺もint
+    auto p = n * 3;
+
+    cout << p << endl;
+    return 0;
+}
+
+~~~~~~
+
+これだけだと特に便利さを感じないが、後々長い宣言が登場するときに便利なのである。
+
+
+## 関数
+Cとほとんど同じだが、いくつかC++において追加された機能が存在している。
+
+### 通常の宣言
+
+再帰的定義は特に何も書く必要はない。
+
+~~~~~~{.cpp}
+#include <iostream>
+
+using namespace std;
+
+int fact(int n){
+    if(n == 1 or n == 0) return 1;
+    else return n * fact(n-1);
+}
+
+int main(int argc,char **argv){
+    cout << fact(10) << endl;
+    return 0;
+}
+~~~~~~
+
+### 参照を引数にする
+上で出てきた参照を引数にすることができる。
+ここで、その参照を書き換えると元々の変数も書き変わることに注意。
+参照は実体を共有する別名の変数なので、メモリを消費しない。
+
+~~~~~~{.cpp}
+#include <iostream>
+
+using namespace std;
+
+void change(int& n){
+    n = 3;
+}
+
+int main(int argc,char **argv){
+    int n = 1000;
+    change(n);
+
+    cout << n << endl; // -> 3
+    return 0;
+}
+~~~~~~
+
+筆者の場合、参照を引数にするのは以下のようなケースである。
+
+1. メモ化再帰のメモとして
+2. 探索する際に盤面を渡す
+
+ここではケース1についてサンプルのコードを載せる。
+
+~~~~~~{.cpp}
+#include <iostream>
+#include <vector>
+#include <unordered_map>
+
+using namespace std;
+
+// メモ化なし
+int fib_without_memo(int n){
+    if(n == 0 or n == 1) return 1;
+    return fib_without_memo(n-1) + fib_without_memo(n-2);
+}
+
+// メモあり
+int fib_with_memo(int n,unordered_map<int,int> &memo){
+    if(memo.find(n) != memo.end()) return memo[n];
+    if(n == 0 or n == 1) return memo[n]=1;
+    return memo[n] = fib_with_memo(n-1,memo) + fib_with_memo(n-2,memo);
+}
+
+
+int main(int argc,char **argv){
+    unordered_map<int,int> memo;
+    for(int i=0;i<10;i++){
+        cout << fib_with_memo(i,memo) << endl;
+    }
+    return 0;
+}
+~~~~~~
+
+もちろん、メモをグローバルな変数として宣言する方法もあるが、個人的には美しくないと感じる。
+この方法では、テストケース毎にクリアしたい場合等に綺麗に書くことができる。
+
+
+#### const参照を引数にする
+どちらかと言えば、こちらのほうが安全だろう。
+メモリは節約したいが、書き換えられると嫌なときに使う。
+巨大なデータを渡すときには必須。
+
+~~~~~~{.cpp}
+#include <iostream>
+
+using namespace std;
+
+void change(const int& n){
+    // コンパイルエラー
+    n = 3;
+}
+
+int main(int argc,char **argv){
+    int n = 1000;
+    change(n);
+
+    cout << n << endl; // -> 3
+    return 0;
+}
+~~~~~~
+
+## クラス
+C++にはJavaやPython等の言語と同様にクラスと呼ばれるものが存在する。
+クラスの意義についてはここでは深くは触れず、使い方のみを説明することにする。
+競技において、クラスを必要とする場面は実は多い。ただし、継承を使う場面はあまりない(もしくは著者が理解していない)ので、その説明は省く。
+
+### 宣言
+クラスの宣言について説明する。
+宣言には、class,もしくはstructキーワードを用いる。
+この二つの違いについてはまた後で。
+
+~~~~~~{.cpp}
+#include <iostream>
+
+using namespace std;
+
+// 例えばグラフのノードを表す構造を作りたい。
+//  structはCの構造体ではない
+struct Edge{
+    // structの場合デフォルトでpublic
+    int src,dst;
+    // 初期化リストをつかって変数を初期化
+    Edge(int s,int d) : src(s),dst(d){
+    }
+};
+
+int main(int argc,char **argv){
+    Edge n(1,2);
+    cerr << n.src << " " << n.dst << endl;
+    return 0;
+}
+~~~~~~
+
+グラフのノードを表すクラスを作成した。
+structで宣言すると、メンバーのデフォルト属性がpublicとなるが、競技の世界ではそのほうが都合が良い。
+とりあえずstructで宣言すればOK。privateにする必要はない。
+通常、デストラクタ等も書くべきだが、競技をする上ではあまり必要ないだろう。(クラスの中で動的にメモリ確保をしていなければ)
+
+
+### テンプレートクラス
+競技プログラミングにおいて自分でテンプレートをつかうクラスを作る事はすくない。
+しかしながら、標準ライブラリを使う上でテンプレートを使っていくので、ここですこしだけ書いておく。
+テンプレートクラスは一部でcharやintといった型を明示せずに抽象的な型を使ってクラスを定義する。
+
+~~~~~~{.cpp}
+#include <iostream>
+
+using namespace std;
+
+
+// Tを抽象的な型としておく。
+template<typename T>
+struct Edge{
+    int src,dst;
+    T value;
+    Edge(int s,int d,T v) : src(s),dst(d),T(v){
+    }
+};
+
+int main(int argc,char **argv){
+    // T = intとする
+    Edge<int> e(1,2,3);
+    cerr << e.src << " " << e.dst << " " << e.value << endl;
+    return 0;
+}
+~~~~~~
+
+上記はEdgeのvalueをTという型で置いておいて、mainの中でTはintとしている。
+
+###

@@ -345,6 +345,21 @@ code > span.er { font-weight: bold; }
 <li><a href="#while文">while文</a></li>
 <li><a href="#do-while">do-while</a></li>
 </ul></li>
+<li><a href="#変数">変数</a><ul>
+<li><a href="#const">const</a></li>
+<li><a href="#参照">参照</a></li>
+<li><a href="#ポインタ">ポインタ</a></li>
+<li><a href="#auto">auto</a></li>
+</ul></li>
+<li><a href="#関数">関数</a><ul>
+<li><a href="#通常の宣言">通常の宣言</a></li>
+<li><a href="#参照を引数にする">参照を引数にする</a></li>
+</ul></li>
+<li><a href="#クラス">クラス</a><ul>
+<li><a href="#宣言">宣言</a></li>
+<li><a href="#テンプレートクラス">テンプレートクラス</a></li>
+<li><a href="#section"></a></li>
+</ul></li>
 </ul></li>
 </ul>
 </nav>
@@ -519,5 +534,201 @@ code > span.er { font-weight: bold; }
 <ul>
 <li><a href="https://sites.google.com/site/cpprefjp/reference/algorithm/next_permutation">cpprefjp - C++ Library Reference next_permutation</a></li>
 </ul>
+<h2 id="変数"><a href="#変数">変数</a></h2>
+<p>C++には型やクラス等が存在している。ここではC++特有のもののみ紹介する。<br />クラスはまた後で。</p>
+<h3 id="const"><a href="#const">const</a></h3>
+<p>いわゆる定数である。Cにはこれが存在せず、またconstは違う意味であった。</p>
+<pre class="sourceCode cpp"><code class="sourceCode cpp"><span class="ot">#include &lt;iostream&gt;</span>
+
+<span class="kw">using</span> <span class="kw">namespace</span> std;
+
+<span class="dt">int</span> main(<span class="dt">int</span> argc,<span class="dt">char</span> **argv){
+    <span class="dt">const</span> <span class="dt">int</span> n = <span class="dv">3</span>;
+
+    <span class="co">// コンパイルエラー</span>
+    n = <span class="dv">2</span>;
+    <span class="kw">return</span> <span class="dv">0</span>;
+}</code></pre>
+<h3 id="参照"><a href="#参照">参照</a></h3>
+<p>参照とは、変数の実体を共有する変数を宣言する方法である。<br />別の名前を付けると言っても良い。<br />ある意味ポインタとおなじようなものである。(同じポインタを持つ違う変数)</p>
+<pre class="sourceCode cpp"><code class="sourceCode cpp"><span class="ot">#include &lt;iostream&gt;</span>
+
+<span class="kw">using</span> <span class="kw">namespace</span> std;
+
+<span class="dt">int</span> main(<span class="dt">int</span> argc,<span class="dt">char</span> **argv){
+    <span class="dt">int</span> n = <span class="dv">3</span>;
+    <span class="dt">int</span>&amp; p = n;
+
+    <span class="co">// pを書き換える &lt;-&gt; nを書き換える</span>
+    p = <span class="dv">1000</span>;
+    cout &lt;&lt; n &lt;&lt; endl; <span class="co">// -&gt; 1000</span>
+    <span class="kw">return</span> <span class="dv">0</span>;
+}</code></pre>
+<p>後述するが、参照は競技プログラミングにおいて必須となる場面がある。</p>
+<h4 id="const参照"><a href="#const参照">const参照</a></h4>
+<p>参照を定義するときにconstを付けることで書き換え不可能になる。</p>
+<pre class="sourceCode cpp"><code class="sourceCode cpp"><span class="ot">#include &lt;iostream&gt;</span>
+
+<span class="kw">using</span> <span class="kw">namespace</span> std;
+
+<span class="dt">int</span> main(<span class="dt">int</span> argc,<span class="dt">char</span> **argv){
+    <span class="dt">int</span> n = <span class="dv">3</span>;
+    <span class="dt">const</span> <span class="dt">int</span>&amp; p = n;
+
+    <span class="co">// コンパイルエラー</span>
+    p = <span class="dv">1000</span>;
+    <span class="kw">return</span> <span class="dv">0</span>;
+}</code></pre>
+<h3 id="ポインタ"><a href="#ポインタ">ポインタ</a></h3>
+<p>ポインタはC同様に存在する。またC++にはスマートポインタがある。</p>
+<h3 id="auto"><a href="#auto">auto</a></h3>
+<p>C++11にはautoという特殊な宣言が存在する。<br />これは型推論をして適当な型をそこに当て嵌めてくれるというものである。</p>
+<pre class="sourceCode cpp"><code class="sourceCode cpp"><span class="ot">#include &lt;iostream&gt;</span>
+
+<span class="kw">using</span> <span class="kw">namespace</span> std;
+
+<span class="dt">int</span> main(<span class="dt">int</span> argc,<span class="dt">char</span> **argv){
+    <span class="dt">int</span> n = <span class="dv">3</span>;
+    <span class="co">// 右辺はintだから左辺もint</span>
+    <span class="dt">auto</span> p = n * <span class="dv">3</span>;
+
+    cout &lt;&lt; p &lt;&lt; endl;
+    <span class="kw">return</span> <span class="dv">0</span>;
+}</code></pre>
+<p>これだけだと特に便利さを感じないが、後々長い宣言が登場するときに便利なのである。</p>
+<h2 id="関数"><a href="#関数">関数</a></h2>
+<p>Cとほとんど同じだが、いくつかC++において追加された機能が存在している。</p>
+<h3 id="通常の宣言"><a href="#通常の宣言">通常の宣言</a></h3>
+<p>再帰的定義は特に何も書く必要はない。</p>
+<pre class="sourceCode cpp"><code class="sourceCode cpp"><span class="ot">#include &lt;iostream&gt;</span>
+
+<span class="kw">using</span> <span class="kw">namespace</span> std;
+
+<span class="dt">int</span> fact(<span class="dt">int</span> n){
+    <span class="kw">if</span>(n == <span class="dv">1</span> <span class="kw">or</span> n == <span class="dv">0</span>) <span class="kw">return</span> <span class="dv">1</span>;
+    <span class="kw">else</span> <span class="kw">return</span> n * fact(n<span class="dv">-1</span>);
+}
+
+<span class="dt">int</span> main(<span class="dt">int</span> argc,<span class="dt">char</span> **argv){
+    cout &lt;&lt; fact(<span class="dv">10</span>) &lt;&lt; endl;
+    <span class="kw">return</span> <span class="dv">0</span>;
+}</code></pre>
+<h3 id="参照を引数にする"><a href="#参照を引数にする">参照を引数にする</a></h3>
+<p>上で出てきた参照を引数にすることができる。<br />ここで、その参照を書き換えると元々の変数も書き変わることに注意。<br />参照は実体を共有する別名の変数なので、メモリを消費しない。</p>
+<pre class="sourceCode cpp"><code class="sourceCode cpp"><span class="ot">#include &lt;iostream&gt;</span>
+
+<span class="kw">using</span> <span class="kw">namespace</span> std;
+
+<span class="dt">void</span> change(<span class="dt">int</span>&amp; n){
+    n = <span class="dv">3</span>;
+}
+
+<span class="dt">int</span> main(<span class="dt">int</span> argc,<span class="dt">char</span> **argv){
+    <span class="dt">int</span> n = <span class="dv">1000</span>;
+    change(n);
+
+    cout &lt;&lt; n &lt;&lt; endl; <span class="co">// -&gt; 3</span>
+    <span class="kw">return</span> <span class="dv">0</span>;
+}</code></pre>
+<p>筆者の場合、参照を引数にするのは以下のようなケースである。</p>
+<ol type="1">
+<li>メモ化再帰のメモとして<br /></li>
+<li>探索する際に盤面を渡す</li>
+</ol>
+<p>ここではケース1についてサンプルのコードを載せる。</p>
+<pre class="sourceCode cpp"><code class="sourceCode cpp"><span class="ot">#include &lt;iostream&gt;</span>
+<span class="ot">#include &lt;vector&gt;</span>
+<span class="ot">#include &lt;unordered_map&gt;</span>
+
+<span class="kw">using</span> <span class="kw">namespace</span> std;
+
+<span class="co">// メモ化なし</span>
+<span class="dt">int</span> fib_without_memo(<span class="dt">int</span> n){
+    <span class="kw">if</span>(n == <span class="dv">0</span> <span class="kw">or</span> n == <span class="dv">1</span>) <span class="kw">return</span> <span class="dv">1</span>;
+    <span class="kw">return</span> fib_without_memo(n<span class="dv">-1</span>) + fib_without_memo(n<span class="dv">-2</span>);
+}
+
+<span class="co">// メモあり</span>
+<span class="dt">int</span> fib_with_memo(<span class="dt">int</span> n,unordered_map&lt;<span class="dt">int</span>,<span class="dt">int</span>&gt; &amp;memo){
+    <span class="kw">if</span>(memo.find(n) != memo.end()) <span class="kw">return</span> memo[n];
+    <span class="kw">if</span>(n == <span class="dv">0</span> <span class="kw">or</span> n == <span class="dv">1</span>) <span class="kw">return</span> memo[n]=<span class="dv">1</span>;
+    <span class="kw">return</span> memo[n] = fib_with_memo(n<span class="dv">-1</span>,memo) + fib_with_memo(n<span class="dv">-2</span>,memo);
+}
+
+
+<span class="dt">int</span> main(<span class="dt">int</span> argc,<span class="dt">char</span> **argv){
+    unordered_map&lt;<span class="dt">int</span>,<span class="dt">int</span>&gt; memo;
+    <span class="kw">for</span>(<span class="dt">int</span> i=<span class="dv">0</span>;i&lt;<span class="dv">10</span>;i++){
+        cout &lt;&lt; fib_with_memo(i,memo) &lt;&lt; endl;
+    }
+    <span class="kw">return</span> <span class="dv">0</span>;
+}</code></pre>
+<p>もちろん、メモをグローバルな変数として宣言する方法もあるが、個人的には美しくないと感じる。<br />この方法では、テストケース毎にクリアしたい場合等に綺麗に書くことができる。</p>
+<h4 id="const参照を引数にする"><a href="#const参照を引数にする">const参照を引数にする</a></h4>
+<p>どちらかと言えば、こちらのほうが安全だろう。<br />メモリは節約したいが、書き換えられると嫌なときに使う。<br />巨大なデータを渡すときには必須。</p>
+<pre class="sourceCode cpp"><code class="sourceCode cpp"><span class="ot">#include &lt;iostream&gt;</span>
+
+<span class="kw">using</span> <span class="kw">namespace</span> std;
+
+<span class="dt">void</span> change(<span class="dt">const</span> <span class="dt">int</span>&amp; n){
+    <span class="co">// コンパイルエラー</span>
+    n = <span class="dv">3</span>;
+}
+
+<span class="dt">int</span> main(<span class="dt">int</span> argc,<span class="dt">char</span> **argv){
+    <span class="dt">int</span> n = <span class="dv">1000</span>;
+    change(n);
+
+    cout &lt;&lt; n &lt;&lt; endl; <span class="co">// -&gt; 3</span>
+    <span class="kw">return</span> <span class="dv">0</span>;
+}</code></pre>
+<h2 id="クラス"><a href="#クラス">クラス</a></h2>
+<p>C++にはJavaやPython等の言語と同様にクラスと呼ばれるものが存在する。<br />クラスの意義についてはここでは深くは触れず、使い方のみを説明することにする。<br />競技において、クラスを必要とする場面は実は多い。ただし、継承を使う場面はあまりない(もしくは著者が理解していない)ので、その説明は省く。</p>
+<h3 id="宣言"><a href="#宣言">宣言</a></h3>
+<p>クラスの宣言について説明する。<br />宣言には、class,もしくはstructキーワードを用いる。<br />この二つの違いについてはまた後で。</p>
+<pre class="sourceCode cpp"><code class="sourceCode cpp"><span class="ot">#include &lt;iostream&gt;</span>
+
+<span class="kw">using</span> <span class="kw">namespace</span> std;
+
+<span class="co">// 例えばグラフのノードを表す構造を作りたい。</span>
+<span class="co">//  structはCの構造体ではない</span>
+<span class="kw">struct</span> Edge{
+    <span class="co">// structの場合デフォルトでpublic</span>
+    <span class="dt">int</span> src,dst;
+    <span class="co">// 初期化リストをつかって変数を初期化</span>
+    Edge(<span class="dt">int</span> s,<span class="dt">int</span> d) : src(s),dst(d){
+    }
+};
+
+<span class="dt">int</span> main(<span class="dt">int</span> argc,<span class="dt">char</span> **argv){
+    Edge n(<span class="dv">1</span>,<span class="dv">2</span>);
+    cerr &lt;&lt; n.src &lt;&lt; <span class="st">&quot; &quot;</span> &lt;&lt; n.dst &lt;&lt; endl;
+    <span class="kw">return</span> <span class="dv">0</span>;
+}</code></pre>
+<p>グラフのノードを表すクラスを作成した。<br />structで宣言すると、メンバーのデフォルト属性がpublicとなるが、競技の世界ではそのほうが都合が良い。<br />とりあえずstructで宣言すればOK。privateにする必要はない。<br />通常、デストラクタ等も書くべきだが、競技をする上ではあまり必要ないだろう。(クラスの中で動的にメモリ確保をしていなければ)</p>
+<h3 id="テンプレートクラス"><a href="#テンプレートクラス">テンプレートクラス</a></h3>
+<p>競技プログラミングにおいて自分でテンプレートをつかうクラスを作る事はすくない。<br />しかしながら、標準ライブラリを使う上でテンプレートを使っていくので、ここですこしだけ書いておく。<br />テンプレートクラスは一部でcharやintといった型を明示せずに抽象的な型を使ってクラスを定義する。</p>
+<pre class="sourceCode cpp"><code class="sourceCode cpp"><span class="ot">#include &lt;iostream&gt;</span>
+
+<span class="kw">using</span> <span class="kw">namespace</span> std;
+
+
+<span class="co">// Tを抽象的な型としておく。</span>
+<span class="kw">template</span>&lt;<span class="kw">typename</span> T&gt;
+<span class="kw">struct</span> Edge{
+    <span class="dt">int</span> src,dst;
+    T value;
+    Edge(<span class="dt">int</span> s,<span class="dt">int</span> d,T v) : src(s),dst(d),T(v){
+    }
+};
+
+<span class="dt">int</span> main(<span class="dt">int</span> argc,<span class="dt">char</span> **argv){
+    <span class="co">// T = intとする</span>
+    Edge&lt;<span class="dt">int</span>&gt; e(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>);
+    cerr &lt;&lt; e.src &lt;&lt; <span class="st">&quot; &quot;</span> &lt;&lt; e.dst &lt;&lt; <span class="st">&quot; &quot;</span> &lt;&lt; e.value &lt;&lt; endl;
+    <span class="kw">return</span> <span class="dv">0</span>;
+}</code></pre>
+<p>上記はEdgeのvalueをTという型で置いておいて、mainの中でTはintとしている。</p>
+<h3 id="section"><a href="#section"></a></h3>
 </body>
 </html>
