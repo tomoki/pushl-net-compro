@@ -27,7 +27,7 @@ find ./ -type f | while read f; do
     then
         output_file=${OUTPUT_DIR}/${dir}/${file_without_ext}.html
         echo "input:" ${f} "output:" ${output_file}
-        pandoc ${f} -H ${MAIN_CSS} -t html5 --mathjax -s \
+        pandoc ${f} -H ${MAIN_CSS} -t html5 --mathjax -s --toc \
                     -f markdown+hard_line_breaks --filter ${BASE_DIR}/include_file.hs \
                     --highlight-style tango -s -o ${output_file} 
     else

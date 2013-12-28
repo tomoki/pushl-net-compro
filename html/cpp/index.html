@@ -321,27 +321,54 @@ code > span.er { font-weight: bold; }
 <h1 class="title">競技プログラミングの為のC++入門</h1>
 <h2 class="author">Tomoki Imai</h2>
 </header>
-<h1 id="introduction">Introduction</h1>
+<nav id="TOC">
+<ul>
+<li><a href="#introduction">Introduction</a><ul>
+<li><a href="#前提知識">前提知識</a></li>
+<li><a href="#リファレンス">リファレンス</a></li>
+<li><a href="#環境">環境</a></li>
+</ul></li>
+<li><a href="#コンパイルの仕方">コンパイルの仕方</a><ul>
+<li><a href="#c11について">C++11について</a></li>
+<li><a href="#コンパイルオプション">コンパイルオプション</a></li>
+<li><a href="#aliasを設定する">Aliasを設定する</a></li>
+<li><a href="#コマンドの実行">コマンドの実行</a></li>
+</ul></li>
+<li><a href="#cの基本">C++の基本</a><ul>
+<li><a href="#main関数">main関数</a></li>
+<li><a href="#includeについて">includeについて</a></li>
+<li><a href="#using-namespace">using namespace</a></li>
+<li><a href="#制御文">制御文</a><ul>
+<li><a href="#if文">if文</a></li>
+<li><a href="#通常のfor文">通常のfor文</a></li>
+<li><a href="#range-based-for文">range-based for文</a></li>
+<li><a href="#while文">while文</a></li>
+<li><a href="#do-while">do-while</a></li>
+</ul></li>
+</ul></li>
+</ul>
+</nav>
+<h1 id="introduction"><a href="#introduction">Introduction</a></h1>
 <p>ここでは、競技プログラミングをする為のC++について書く。<br />通常のプログラミングでは使用するべきではない書き方も多用する。<br />C++を使うメリットとしては、高速であること、使用している人が多いことが挙げられる。</p>
-<h2 id="前提知識">前提知識</h2>
+<h2 id="前提知識"><a href="#前提知識">前提知識</a></h2>
 <p>この文書を読むにあたっての前提知識を列挙する。</p>
 <ul>
 <li>基本的なC/C++の知識。すくなくともCで関数定義等はできることを仮定する<br /></li>
 <li>g++/clang++がインストールされていること</li>
 </ul>
-<h2 id="リファレンス">リファレンス</h2>
+<h2 id="リファレンス"><a href="#リファレンス">リファレンス</a></h2>
 <p>上記の前提知識、およびこの文書でカバーしない場所を参照する文書を紹介する。</p>
 <ul>
 <li><a href="http://d.hatena.ne.jp/torus711/20130516/p1">Windows で競技プログラミングしよう</a><br /></li>
 <li><a href="http://www.geocities.jp/ky_webid/cpp/language/index.html">Programming Place C++編</a></li>
 </ul>
-<h2 id="環境">環境</h2>
+<h2 id="環境"><a href="#環境">環境</a></h2>
 <p>下記のソースは、Linux上のg++4.8.2においてテストしている。</p>
-<h1 id="コンパイルの仕方">コンパイルの仕方</h1>
+<h1 id="コンパイルの仕方"><a href="#コンパイルの仕方">コンパイルの仕方</a></h1>
 <p>manを読む。と言いたいところだが、いくつか注意点がある。</p>
-<h2 id="c11について">C++11について</h2>
+<h2 id="c11について"><a href="#c11について">C++11について</a></h2>
 <p>C++11はC++の比較的新しいバージョンである。<br />競技プログラミングのサイト(AOJ,Codeforces,TopCoder...)は基本的にC++11をサポートしている。<br />が、いくつかのサイト(POJ...)はC++11をサポートしていない。<br />この文書では、C++11をつかうことを前提とする。<br />理由としては、大分C++11をサポートするサイトが多くなってきたこと、C++11はかなり強力であることである。</p>
-<h2 id="コンパイルオプション">コンパイルオプション</h2>
+<h2 id="コンパイルオプション"><a href="#コンパイルオプション">コンパイルオプション</a></h2>
 <p>g++/clang++は膨大なコンパイルオプションを備えている。ここでは有益なもののみを示す。</p>
 <ul>
 <li>-O2 : 最適化をオンにする。-O3もあるが、基本的には-O2で良いと思われる(要調査)<br /></li>
@@ -351,15 +378,15 @@ code > span.er { font-weight: bold; }
 <p>これらをつけてコンパイルするべきである。具体的には以下のようにする。</p>
 <pre><code>$ g++ -std=c++11 -Wall -O2 main.cpp -o main</code></pre>
 <p>これを走らせると、ディレクトリにmainという実行ファイルが生成される。</p>
-<h2 id="aliasを設定する">Aliasを設定する</h2>
+<h2 id="aliasを設定する"><a href="#aliasを設定する">Aliasを設定する</a></h2>
 <p>Unixシステムにはコマンドを新しく設定するaliasという機能が存在する。<br />詳しくは&quot;man alias&quot;を参照してほしい。<br />私は以下のようなaliasを設定している。aliasの設定方法については検索してほしい。</p>
 <pre><code>alias gpp=&quot;g++ -std=c++11 -Wall -O2&quot;</code></pre>
 <p>これによって、以下のような記述ができるようになる。</p>
 <pre><code>$ gpp main.cpp -o main</code></pre>
-<h2 id="コマンドの実行">コマンドの実行</h2>
+<h2 id="コマンドの実行"><a href="#コマンドの実行">コマンドの実行</a></h2>
 <p>(必要か?)</p>
-<h1 id="cの基本">C++の基本</h1>
-<h2 id="main関数">main関数</h2>
+<h1 id="cの基本"><a href="#cの基本">C++の基本</a></h1>
+<h2 id="main関数"><a href="#main関数">main関数</a></h2>
 <p>main関数は、C,C++でほとんど変わらない。<br />ただし、return 0を忘れるとruntime errorとなる場合がある。(例えばAOJ)<br />いわゆるHelloWorldは以下のように書ける。</p>
 <pre class="sourceCode cpp"><code class="sourceCode cpp"><span class="ot">#include &lt;iostream&gt;</span>
 
@@ -369,11 +396,11 @@ code > span.er { font-weight: bold; }
     cout &lt;&lt; <span class="st">&quot;Hello World&quot;</span> &lt;&lt; endl;
     <span class="kw">return</span> <span class="dv">0</span>;
 }</code></pre>
-<h2 id="includeについて">includeについて</h2>
+<h2 id="includeについて"><a href="#includeについて">includeについて</a></h2>
 <p>多くの入門サイトにおいて、おまじないと称されるincludeについてすこしだけ。<br />競技プログラミングにおいて、ファイルを分割することはほとんどない。<br />なぜなら、ファイルの提出は1ファイルのみであることが多いからである。</p>
 <p>しかしながら、iostreamのincludeが実際には何をしているのか知っておくのは有益である。<br />g++にオプション,-Eを設定することでプリプロセス済のファイルを出すことができる。<br />それによりincludeが何をしているのかわかるかもしれない。</p>
 <p>includeとは、ファイルのコピペである。<br />includeは指定されたファイルをそこにペーストするだけにすぎない。<br />そのファイルの中に、coutだったりの定義がはいっているのである。</p>
-<h2 id="using-namespace">using namespace</h2>
+<h2 id="using-namespace"><a href="#using-namespace">using namespace</a></h2>
 <p>名前空間は、C言語には明示的には存在しない概念である。<br />C++において、名前空間は以下のように定義できる。</p>
 <pre class="sourceCode cpp"><code class="sourceCode cpp"><span class="ot">#include &lt;iostream&gt;</span>
 
@@ -396,9 +423,9 @@ code > span.er { font-weight: bold; }
 }</code></pre>
 <p>つまるところ、Cのスコープのようなものである。<br />ただし、中の関数、変数にアクセスできる。それには上記のように(hoge::)が必要になる。<br />当然、標準ライブラリが持っている名前空間というものも存在していて、それがstdである。<br />using namespace ...は指定した名前空間をすべて取り込む。<br />よって、本来std::coutと書くところをcoutと省略することができる。<br />競技プログラミングをする上で、using namespace stdは必須であると言える。<br />通常のプログラミングでは名前の衝突が起こる可能性が高く、オススメできない。</p>
 <p>また、coutについては後々書くことにする。</p>
-<h2 id="制御文">制御文</h2>
+<h2 id="制御文"><a href="#制御文">制御文</a></h2>
 <p>制御文はアルゴリズムの根本と言っても良い。<br />基本的にはCと同じであるが、例を紹介しながらさらっと見ていく。</p>
-<h3 id="if文">if文</h3>
+<h3 id="if文"><a href="#if文">if文</a></h3>
 <p>Cのifと大体同じである。</p>
 <pre class="sourceCode cpp"><code class="sourceCode cpp"><span class="ot">#include &lt;iostream&gt;</span>
 
@@ -427,7 +454,7 @@ code > span.er { font-weight: bold; }
     <span class="kw">return</span> <span class="dv">0</span>;
 }</code></pre>
 <p>boolへのキャストが発生する。整数型(int,long long)は0のみがfalse,それ以外はtrueと解釈される。<br />クラスの場合は、boolへのキャストが発生する。</p>
-<h3 id="通常のfor文">通常のfor文</h3>
+<h3 id="通常のfor文"><a href="#通常のfor文">通常のfor文</a></h3>
 <p>Cのforと大体同じである。が、C90と違って宣言をfor文内で行える。</p>
 <pre class="sourceCode cpp"><code class="sourceCode cpp"><span class="ot">#include &lt;iostream&gt;</span>
 
@@ -453,9 +480,9 @@ code > span.er { font-weight: bold; }
     <span class="kw">return</span> <span class="dv">0</span>;
 }</code></pre>
 <p>これによって、インクリメントや条件文のミスを減らし、またタイプ量も減らすことができる。</p>
-<h3 id="range-based-for文">range-based for文</h3>
+<h3 id="range-based-for文"><a href="#range-based-for文">range-based for文</a></h3>
 <p>これについてはvector等と一緒に述べることにする。</p>
-<h3 id="while文">while文</h3>
+<h3 id="while文"><a href="#while文">while文</a></h3>
 <p>Cと大体同じである。</p>
 <pre class="sourceCode cpp"><code class="sourceCode cpp"><span class="ot">#include &lt;iostream&gt;</span>
 
@@ -487,7 +514,7 @@ code > span.er { font-weight: bold; }
     }
     <span class="kw">return</span> <span class="dv">0</span>;
 }</code></pre>
-<h3 id="do-while">do-while</h3>
+<h3 id="do-while"><a href="#do-while">do-while</a></h3>
 <p>Cのdo-whileとほとんど同じである。<br />競技の世界でも、通常の世界でもあまり目にすることはないが、競技の世界ではnext_permutationというライブラリ関数を使う際に使用することが多い。<br />ここでは省略するが、next_permutationについては以下を参照されたし。</p>
 <ul>
 <li><a href="https://sites.google.com/site/cpprefjp/reference/algorithm/next_permutation">cpprefjp - C++ Library Reference next_permutation</a></li>
